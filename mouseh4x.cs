@@ -21,6 +21,18 @@ namespace mouseClicker
         [DllImport("user32.dll")]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+
+            public static implicit operator Point(POINT point)
+            {
+                return new Point(point.X, point.Y);
+            }
+        }
+
         public ThreadStart clickRef = new ThreadStart(CLICKALLTHEBUTTONS);
         public Thread clickThread;
         public int clickId;
@@ -74,21 +86,6 @@ namespace mouseClicker
             base.WndProc(ref m);
         }
 
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
-        {
-            public int X;
-            public int Y;
-
-            public static implicit operator Point(POINT point)
-            {
-                return new Point(point.X, point.Y);
-            }
-        }
-
-
-
         public static Point GetCursorPosition()
         {
             POINT lpPoint;
@@ -103,6 +100,7 @@ namespace mouseClicker
             mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
         }
+
         public static void rightMouseClick(int xpos, int ypos)
         {
             SetCursorPos(xpos, ypos);
@@ -126,8 +124,8 @@ namespace mouseClicker
         {
             InitializeComponent();
             this.clickId = 0;
-            RegisterHotKey(this.Handle, 0, 0x0000, 0x42);
-            RegisterHotKey(this.Handle, 1, 0x0000, 0x43);
+            RegisterHotKey(this.Handle, 0, 0x0000, 0x42); // hotkey b
+            RegisterHotKey(this.Handle, 1, 0x0000, 0x43); // hotkey c
         }
     }
 }
