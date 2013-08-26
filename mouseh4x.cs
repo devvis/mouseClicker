@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace mouseClicker
 {
@@ -20,27 +21,42 @@ namespace mouseClicker
         [DllImport("user32.dll")]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
 
+        public ThreadStart clickRef = new ThreadStart(CLICKALLTHEBUTTONS);
+        public Thread clickThread;
+        public int clickId;
+
+        
         protected override void WndProc(ref Message m)
         {
-
             if (m.Msg == 0x0312)
             {
                 int id = m.WParam.ToInt32();
                 if (id == 0)
                 {
-                    CLICKALLTHEBUTTONS();
+                    if (this.clickId == 0)
+                    {
+                        this.clickThread = new Thread(clickRef);
+                        this.clickThread.Name = "clickThread";
+                        this.clickId = this.clickThread.ManagedThreadId;
+                        this.clickThread.IsBackground = true;
+                        this.clickThread.Start();
+                        
+                    }
                 }
                 else if (id == 1)
                 {
-                    Environment.Exit(1337);
+                    //Environment.Exit(1337);
+                    if (this.clickId != 0)
+                    {
+                        this.clickThread.Abort();
+                        this.clickId = 0;
+                    }
                 }
                 else
                 {
                     MessageBox.Show("wut");
                 }
-
             }
-
             base.WndProc(ref m);
         }
 
@@ -55,7 +71,6 @@ namespace mouseClicker
             {
                 return new Point(point.X, point.Y);
             }
-            
         }
 
 
@@ -89,18 +104,18 @@ namespace mouseClicker
         {
 
             Point yolo = GetCursorPosition();
-            // Clicks the current position for 1000 times, mkay.
-            for (int i = 0; i < 1000; i++)
+            // Clicks the current position for 10000 times, mkay.
+            for (int i = 0; i < 10000; i++)
             {
                 leftMouseClick(yolo.X, yolo.Y);
-                System.Threading.Thread.Sleep(10);
+                Thread.Sleep(10);
             }
-            MessageBox.Show("I doen.");
         }
 
         public mainWnd()
         {
             InitializeComponent();
+            this.clickId = 0;
             RegisterHotKey(this.Handle, 0, 0x0000, 0x42);
             RegisterHotKey(this.Handle, 1, 0x0000, 0x43);
         }
