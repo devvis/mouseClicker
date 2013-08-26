@@ -25,37 +25,51 @@ namespace mouseClicker
         public Thread clickThread;
         public int clickId;
 
+        public const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        public const int MOUSEEVENTF_LEFTUP = 0x04;
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        public const int MOUSEEVENTF_RIGHTUP = 0x10;
+        public const int WM_NCHITTEST = 0x84;
+        public const int WM_HOTKEY = 0x0312;
+        public const int HTCLIENT = 0x1;
+        public const int HTCAPTION = 0x2;
         
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x0312)
+            switch(m.Msg)
             {
-                int id = m.WParam.ToInt32();
-                if (id == 0)
-                {
-                    if (this.clickId == 0)
+                case WM_HOTKEY:
+                    int id = m.WParam.ToInt32();
+                    switch (id)
                     {
-                        this.clickThread = new Thread(clickRef);
-                        this.clickThread.Name = "clickThread";
-                        this.clickId = this.clickThread.ManagedThreadId;
-                        this.clickThread.IsBackground = true;
-                        this.clickThread.Start();
-                        
+                        case 0: // hotkey b
+                            if (this.clickId == 0)
+                            {
+                                this.clickThread = new Thread(clickRef);
+                                this.clickThread.Name = "clickThread";
+                                this.clickId = this.clickThread.ManagedThreadId;
+                                this.clickThread.IsBackground = true;
+                                this.clickThread.Start();
+
+                            }
+                            break;
+                        case 1: // hotkey c
+                            if (this.clickId != 0)
+                            {
+                                this.clickThread.Abort();
+                                this.clickId = 0;
+                            }
+                            break;
                     }
-                }
-                else if (id == 1)
-                {
-                    //Environment.Exit(1337);
-                    if (this.clickId != 0)
+                break;
+
+                case WM_NCHITTEST:
+                    base.WndProc(ref m);
+                    if ((int)m.Result == HTCLIENT)
                     {
-                        this.clickThread.Abort();
-                        this.clickId = 0;
+                        m.Result = (IntPtr)HTCAPTION;
                     }
-                }
-                else
-                {
-                    MessageBox.Show("wut");
-                }
+                    return;
             }
             base.WndProc(ref m);
         }
@@ -74,10 +88,6 @@ namespace mouseClicker
         }
 
 
-        public const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        public const int MOUSEEVENTF_LEFTUP = 0x04;
-        public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
-        public const int MOUSEEVENTF_RIGHTUP = 0x10;
 
         public static Point GetCursorPosition()
         {
@@ -105,7 +115,7 @@ namespace mouseClicker
 
             Point yolo = GetCursorPosition();
             // Clicks the current position for 10000 times, mkay.
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000000; i++)
             {
                 leftMouseClick(yolo.X, yolo.Y);
                 Thread.Sleep(10);
