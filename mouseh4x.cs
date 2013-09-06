@@ -71,6 +71,9 @@ namespace mouseClicker
                                 this.clickId = 0;
                             }
                             break;
+                        case 2:
+                            showAboutBox();
+                            break;
                     }
                 break;
 
@@ -118,12 +121,18 @@ namespace mouseClicker
             }
         }
 
+        public static void showAboutBox()
+        {
+            MessageBox.Show("This program clicks your mouse for 10 000 times at the current position.\nPress b to begin clicking, c to cancel, F1 to bring up this dialog.\nAlso, please not that b,c and f1 are hijacked by the program when it's running.\n\nMade by devvis 2k13 - Released under the terms of the MIT-license.", "About", MessageBoxButtons.OK, MessageBoxIcon.None);
+        }
+
         public mainWnd()
         {
             InitializeComponent();
             this.clickId = 0;
             RegisterHotKey(this.Handle, 0, 0x0000, 0x42); // hotkey b
             RegisterHotKey(this.Handle, 1, 0x0000, 0x43); // hotkey c
+            RegisterHotKey(this.Handle, 2, 0x0000, 0x70); // hotkey f1
         }
     }
 }
