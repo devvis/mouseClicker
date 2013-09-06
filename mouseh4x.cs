@@ -113,7 +113,7 @@ namespace mouseClicker
         public static void CLICKALLTHEBUTTONS()
         {
             Point yolo = GetCursorPosition();
-            // Clicks the current position for 10000 times, mkay.
+            // Clicks the current position for 1 000 000 times, mkay.
             for (int i = 0; i < 1000000; i++)
             {
                 leftMouseClick(yolo.X, yolo.Y);
