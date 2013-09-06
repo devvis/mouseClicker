@@ -62,7 +62,6 @@ namespace mouseClicker
                                 this.clickId = this.clickThread.ManagedThreadId;
                                 this.clickThread.IsBackground = true;
                                 this.clickThread.Start();
-
                             }
                             break;
                         case 1: // hotkey c
@@ -110,7 +109,6 @@ namespace mouseClicker
 
         public static void CLICKALLTHEBUTTONS()
         {
-
             Point yolo = GetCursorPosition();
             // Clicks the current position for 10000 times, mkay.
             for (int i = 0; i < 1000000; i++)
