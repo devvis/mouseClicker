@@ -123,7 +123,7 @@ namespace mouseClicker
 
         public static void showAboutBox()
         {
-            MessageBox.Show("This program clicks your mouse for 10 000 times at the current position.\nPress b to begin clicking, c to cancel, F1 to bring up this dialog.\nAlso, please not that b,c and f1 are hijacked by the program when it's running.\n\nMade by devvis 2k13 - Released under the terms of the MIT-license.", "About", MessageBoxButtons.OK, MessageBoxIcon.None);
+            MessageBox.Show("This program clicks your mouse for 1 000 000 times at the current position.\nPress b to begin clicking, c to cancel, F1 to bring up this dialog.\nAlso, please not that b,c and f1 are hijacked by the program when it's running.\n\nMade by devvis 2k13 - Released under the terms of the MIT-license.", "About", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
         public mainWnd()
