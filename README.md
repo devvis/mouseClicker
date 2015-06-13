@@ -1,7 +1,7 @@
 mouseClicker
 ============
 
-Simple C# program that clicks your mouse 1k times at the current position
+Simple C# program that clicks your mouse rapidly at the current position.
 
 Hotkeys:
 
