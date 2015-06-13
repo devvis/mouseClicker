@@ -36,11 +36,11 @@
             // 
             this.mouzh4ckz.AutoSize = true;
             this.mouzh4ckz.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mouzh4ckz.Location = new System.Drawing.Point(16, 9);
+            this.mouzh4ckz.Location = new System.Drawing.Point(2, 9);
             this.mouzh4ckz.Name = "mouzh4ckz";
-            this.mouzh4ckz.Size = new System.Drawing.Size(105, 14);
+            this.mouzh4ckz.Size = new System.Drawing.Size(133, 14);
             this.mouzh4ckz.TabIndex = 0;
-            this.mouzh4ckz.Text = "I h4ck ur mouz";
+            this.mouzh4ckz.Text = "Press F1 for help.";
             // 
             // mainWnd
             // 
@@ -55,7 +55,7 @@
             this.Name = "mainWnd";
             this.Opacity = 0.8D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MOUSE H4XX0RZZzzz";
+            this.Text = "Mouse Clicker v0.4";
             this.ResumeLayout(false);
             this.PerformLayout();
 
